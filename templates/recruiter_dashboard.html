@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block title %}Recruiter Dashboard{% endblock %}
+
+{% block content %}
+
+<div class="card shadow">
+
+    <div class="card-body">
+
+        <h2>Recruiter Dashboard</h2>
+
+        <p class="lead mb-0">
+            Welcome, {{ session.get('display_name') }}!
+        </p>
+
+        <p class="text-muted">
+            You are logged in as {{ session.get('email') }}.
+        </p>
+
+        <p>
+            Job posting and applicant management features will be added in the next sprint.
+        </p>
+
+    </div>
+
+</div>
+
+{% endblock %}

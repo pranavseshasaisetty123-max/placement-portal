@@ -1,5 +1,7 @@
 {% extends "base.html" %}
 
+{% block title %}Recruiter Login{% endblock %}
+
 {% block content %}
 
 <div class="row justify-content-center">
@@ -14,40 +16,50 @@
                     Recruiter Login
                 </h2>
 
-                <form>
+                <form method="POST"
+                      action="{{ url_for('auth.recruiter_login') }}">
 
                     <div class="mb-3">
 
-                        <label class="form-label">
+                        <label class="form-label" for="email">
                             Email
                         </label>
 
-                        <input
-                            type="email"
-                            class="form-control">
+                        <input type="email"
+                               class="form-control"
+                               id="email"
+                               name="email"
+                               required>
 
                     </div>
 
                     <div class="mb-3">
 
-                        <label class="form-label">
+                        <label class="form-label" for="password">
                             Password
                         </label>
 
-                        <input
-                            type="password"
-                            class="form-control">
+                        <input type="password"
+                               class="form-control"
+                               id="password"
+                               name="password"
+                               required>
 
                     </div>
 
-                    <button
-                        class="btn btn-primary w-100">
-
+                    <button type="submit"
+                            class="btn btn-primary w-100">
                         Login
-
                     </button>
 
                 </form>
+
+                <p class="text-center mt-3 mb-0">
+                    New recruiter?
+                    <a href="{{ url_for('auth.register_recruiter') }}">
+                        Register here
+                    </a>
+                </p>
 
             </div>
 

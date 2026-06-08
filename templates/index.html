@@ -10,12 +10,12 @@
         Find internships and placement opportunities.
     </p>
 
-    <a href="/student-login"
+    <a href="{{ url_for('auth.student_login') }}"
        class="btn btn-primary">
        Student Login
     </a>
 
-    <a href="/recruiter-login"
+    <a href="{{ url_for('auth.recruiter_login') }}"
        class="btn btn-success">
        Recruiter Login
     </a>
