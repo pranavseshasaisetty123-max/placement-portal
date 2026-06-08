@@ -18,9 +18,19 @@
             You are logged in as {{ session.get('email') }}.
         </p>
 
-        <p>
-            Job posting and applicant management features will be added in the next sprint.
-        </p>
+        <div class="d-flex gap-2">
+
+            <a href="{{ url_for('jobs.create_job') }}"
+               class="btn btn-primary">
+                Post a Job
+            </a>
+
+            <a href="{{ url_for('jobs.my_jobs') }}"
+               class="btn btn-outline-primary">
+                View My Jobs
+            </a>
+
+        </div>
 
     </div>
 

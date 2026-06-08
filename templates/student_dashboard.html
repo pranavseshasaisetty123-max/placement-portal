@@ -18,9 +18,10 @@
             You are logged in as {{ session.get('email') }}.
         </p>
 
-        <p>
-            Job browsing and application features will be added in the next sprint.
-        </p>
+        <a href="{{ url_for('jobs.browse_jobs') }}"
+           class="btn btn-primary">
+            Browse Available Jobs
+        </a>
 
     </div>
 

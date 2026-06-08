@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block title %}{{ job.title }}{% endblock %}
+
+{% block content %}
+
+<div class="row justify-content-center">
+
+    <div class="col-md-8">
+
+        <div class="card shadow">
+
+            <div class="card-body">
+
+                <a href="{{ url_for('jobs.browse_jobs') }}"
+                   class="btn btn-sm btn-outline-secondary mb-3">
+                    ← Back to Jobs
+                </a>
+
+                <h2>{{ job.title }}</h2>
+
+                <p class="text-muted mb-1">
+                    🏢 {{ job.company_name }}
+                </p>
+
+                <p class="text-muted mb-4">
+                    📍 {{ job.location }}
+                </p>
+
+                <h5>Job Description</h5>
+
+                <p class="mb-0" style="white-space: pre-line;">{{ job.description }}</p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}
