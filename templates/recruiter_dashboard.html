@@ -14,12 +14,12 @@
             Welcome, {{ session.get('display_name') }}!
         </p>
 
-        <p class="text-muted mt-2">
-            You are logged in as a recruiter (ID: {{ session.get('user_id') }}).
+        <p class="text-muted">
+            You are logged in as {{ session.get('email') }}.
         </p>
 
-        <p class="mb-0">
-            Job posting features will be available in the next sprint.
+        <p>
+            Job posting and applicant management features will be added in the next sprint.
         </p>
 
     </div>

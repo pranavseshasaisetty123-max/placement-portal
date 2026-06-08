@@ -12,30 +12,43 @@
 
             <div class="card-body">
 
-                <h2 class="text-center mb-4">Student Login</h2>
+                <h2 class="text-center mb-4">
+                    Student Login
+                </h2>
 
                 <form method="POST"
                       action="{{ url_for('auth.student_login') }}">
 
                     <div class="mb-3">
-                        <label class="form-label" for="email">Email</label>
+
+                        <label class="form-label" for="email">
+                            Email
+                        </label>
+
                         <input type="email"
                                class="form-control"
                                id="email"
                                name="email"
                                required>
+
                     </div>
 
                     <div class="mb-3">
-                        <label class="form-label" for="password">Password</label>
+
+                        <label class="form-label" for="password">
+                            Password
+                        </label>
+
                         <input type="password"
                                class="form-control"
                                id="password"
                                name="password"
                                required>
+
                     </div>
 
-                    <button type="submit" class="btn btn-primary w-100">
+                    <button type="submit"
+                            class="btn btn-primary w-100">
                         Login
                     </button>
 
@@ -43,7 +56,9 @@
 
                 <p class="text-center mt-3 mb-0">
                     New student?
-                    <a href="{{ url_for('auth.register_student') }}">Register here</a>
+                    <a href="{{ url_for('auth.register_student') }}">
+                        Register here
+                    </a>
                 </p>
 
             </div>

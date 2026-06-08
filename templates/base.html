@@ -40,7 +40,6 @@
 
 <div class="container mt-4">
 
-    {# Flash messages — set in routes via flash(), displayed once per page load #}
     {% with messages = get_flashed_messages(with_categories=true) %}
         {% if messages %}
             {% for category, message in messages %}

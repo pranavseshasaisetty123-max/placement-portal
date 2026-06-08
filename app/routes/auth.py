@@ -3,20 +3,11 @@ from flask import Blueprint, flash, redirect, render_template, request, session,
 from app.services import auth_service
 from app.utils.session import login_required, login_user, logout_user
 
-# auth blueprint — registration, login, logout, and role-specific dashboards.
 auth_bp = Blueprint("auth", __name__)
 
 
 @auth_bp.route("/student-login", methods=["GET", "POST"])
 def student_login():
-    """
-    Student login request flow:
-    GET  → render the login form
-    POST → read form data → auth_service.authenticate_student()
-         → on success: login_user() writes to Flask session
-         → redirect to student dashboard
-         → on failure: flash message and re-render form
-    """
     if session.get("user_type") == "student":
         return redirect(url_for("auth.student_dashboard"))
 
@@ -41,7 +32,6 @@ def student_login():
 
 @auth_bp.route("/recruiter-login", methods=["GET", "POST"])
 def recruiter_login():
-    """Same request flow as student login, but for recruiters."""
     if session.get("user_type") == "recruiter":
         return redirect(url_for("auth.recruiter_dashboard"))
 
@@ -66,12 +56,6 @@ def recruiter_login():
 
 @auth_bp.route("/register-student", methods=["GET", "POST"])
 def register_student():
-    """
-    Student registration request flow:
-    POST → validate form → auth_service.register_student()
-         → on success: flash + redirect to login
-         → on duplicate email: flash error and re-render form
-    """
     if session.get("user_type") == "student":
         return redirect(url_for("auth.student_dashboard"))
 
@@ -105,7 +89,6 @@ def register_student():
 
 @auth_bp.route("/register-recruiter", methods=["GET", "POST"])
 def register_recruiter():
-    """Recruiter registration — company_name maps to the recruiters table."""
     if session.get("user_type") == "recruiter":
         return redirect(url_for("auth.recruiter_dashboard"))
 
@@ -140,20 +123,17 @@ def register_recruiter():
 @auth_bp.route("/student-dashboard")
 @login_required(user_type="student")
 def student_dashboard():
-    """Protected route — only accessible when session user_type is 'student'."""
     return render_template("student_dashboard.html")
 
 
 @auth_bp.route("/recruiter-dashboard")
 @login_required(user_type="recruiter")
 def recruiter_dashboard():
-    """Protected route — only accessible when session user_type is 'recruiter'."""
     return render_template("recruiter_dashboard.html")
 
 
 @auth_bp.route("/logout")
 def logout():
-    """Clear the session and return the user to the home page."""
     logout_user()
     flash("You have been logged out.", "info")
     return redirect(url_for("main.home"))
