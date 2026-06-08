@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block title %}Student Dashboard{% endblock %}
+
+{% block content %}
+
+<div class="card shadow">
+
+    <div class="card-body">
+
+        <h2>Student Dashboard</h2>
+
+        <p class="lead mb-0">
+            Welcome, {{ session.get('display_name') }}!
+        </p>
+
+        <p class="text-muted mt-2">
+            You are logged in as a student (ID: {{ session.get('user_id') }}).
+        </p>
+
+        <p class="mb-0">
+            Job browsing and applications will be available in the next sprint.
+        </p>
+
+    </div>
+
+</div>
+
+{% endblock %}

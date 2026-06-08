@@ -1,1 +1,77 @@
-<h1>Recruiter Registration Page</h1>
+{% extends "base.html" %}
+
+{% block title %}Recruiter Registration{% endblock %}
+
+{% block content %}
+
+<div class="row justify-content-center">
+
+    <div class="col-md-6">
+
+        <div class="card shadow">
+
+            <div class="card-body">
+
+                <h2 class="text-center mb-4">Recruiter Registration</h2>
+
+                <form method="POST"
+                      action="{{ url_for('auth.register_recruiter') }}">
+
+                    <div class="mb-3">
+                        <label class="form-label" for="company_name">Company Name</label>
+                        <input type="text"
+                               class="form-control"
+                               id="company_name"
+                               name="company_name"
+                               required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label" for="email">Email</label>
+                        <input type="email"
+                               class="form-control"
+                               id="email"
+                               name="email"
+                               required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label" for="password">Password</label>
+                        <input type="password"
+                               class="form-control"
+                               id="password"
+                               name="password"
+                               minlength="6"
+                               required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label" for="confirm_password">Confirm Password</label>
+                        <input type="password"
+                               class="form-control"
+                               id="confirm_password"
+                               name="confirm_password"
+                               minlength="6"
+                               required>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary w-100">
+                        Register
+                    </button>
+
+                </form>
+
+                <p class="text-center mt-3 mb-0">
+                    Already registered?
+                    <a href="{{ url_for('auth.recruiter_login') }}">Login here</a>
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}
