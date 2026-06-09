@@ -1,0 +1,94 @@
+{% extends "base.html" %}
+
+{% block title %}Manage Students - Admin{% endblock %}
+
+{% block content %}
+<div class="row mb-4 align-items-center">
+    <div class="col">
+        <h2 class="fw-bold mb-0">👤 Student Directory</h2>
+        <p class="text-muted">Audit student registrations and inspect uploaded resumes.</p>
+    </div>
+    <div class="col-auto">
+        <a href="{{ url_for('admin.dashboard') }}" class="btn btn-outline-secondary px-4">
+            &larr; Admin Dashboard
+        </a>
+    </div>
+</div>
+
+{% if not students %}
+<div class="card shadow border-0 py-5 text-center my-4">
+    <div class="card-body">
+        <div class="display-1 text-muted mb-3">👥</div>
+        <h3 class="fw-bold text-dark">No Students Registered</h3>
+        <p class="text-muted mx-auto" style="max-width: 500px;">
+            There are no student accounts registered in the database yet.
+        </p>
+    </div>
+</div>
+{% else %}
+<div class="card shadow-sm border-0 rounded-3">
+    <div class="card-body p-0">
+        <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0">
+                <thead class="table-dark">
+                    <tr>
+                        <th scope="col" class="ps-4 py-3">Student ID</th>
+                        <th scope="col" class="py-3">Name</th>
+                        <th scope="col" class="py-3">Email Address</th>
+                        <th scope="col" class="py-3">Resume Status</th>
+                        <th scope="col" class="pe-4 py-3 text-end" style="min-width: 200px;">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for student in students %}
+                    <tr>
+                        <td class="ps-4 text-secondary">#{{ student.student_id }}</td>
+                        <td class="fw-semibold text-dark">{{ student.name }}</td>
+                        <td>
+                            <a href="mailto:{{ student.email }}" class="text-decoration-none text-secondary">
+                                ✉️ {{ student.email }}
+                            </a>
+                        </td>
+                        <td>
+                            {% if student.resume_path %}
+                                <span class="badge bg-success-subtle text-success border border-success-subtle px-2 py-1">
+                                    ✓ Uploaded
+                                </span>
+                            {% else %}
+                                <span class="badge bg-secondary-subtle text-secondary border border-secondary-subtle px-2 py-1">
+                                    No Resume
+                                </span>
+                            {% endif %}
+                        </td>
+                        <td class="pe-4 text-end">
+                            {% if student.resume_path %}
+                                <div class="d-flex gap-1 justify-content-end">
+                                    <a href="{{ url_for('profile.view_resume', student_id=student.student_id) }}" 
+                                       target="_blank" 
+                                       class="btn btn-sm btn-outline-primary py-1 px-2">
+                                        👁️ View Resume
+                                    </a>
+                                    <a href="{{ url_for('profile.download_resume', student_id=student.student_id) }}" 
+                                       class="btn btn-sm btn-outline-secondary py-1 px-2">
+                                        📥 Download
+                                    </a>
+                                </div>
+                            {% else %}
+                                <span class="text-muted fs-7">N/A</span>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endif %}
+
+<style>
+    .fs-7 {
+        font-size: 0.85rem;
+    }
+</style>
+{% endblock %}

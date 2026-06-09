@@ -109,6 +109,10 @@ def can_access_resume(user_id, user_type, student_id):
     if not user_id or not user_type:
         return False
 
+    # Section 0: Check Admin permission (Admins have global access)
+    if user_type == "admin":
+        return True
+
     # Section 1: Check Student permission
     if user_type == "student":
         return int(user_id) == int(student_id)

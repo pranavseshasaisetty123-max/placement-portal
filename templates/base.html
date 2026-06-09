@@ -46,6 +46,27 @@
                    href="{{ url_for('jobs.create') }}">
                     Post a Job
                 </a>
+            {% elif session.get('user_type') == 'admin' %}
+                <a class="btn btn-outline-light btn-sm"
+                   href="{{ url_for('admin.dashboard') }}">
+                    Dashboard
+                </a>
+                <a class="btn btn-outline-light btn-sm"
+                   href="{{ url_for('admin.students') }}">
+                    Students
+                </a>
+                <a class="btn btn-outline-light btn-sm"
+                   href="{{ url_for('admin.recruiters') }}">
+                    Recruiters
+                </a>
+                <a class="btn btn-outline-light btn-sm"
+                   href="{{ url_for('admin.jobs') }}">
+                    Jobs
+                </a>
+                <a class="btn btn-outline-light btn-sm"
+                   href="{{ url_for('admin.applications') }}">
+                    Applications
+                </a>
             {% endif %}
 
             {% if session.get('user_id') %}

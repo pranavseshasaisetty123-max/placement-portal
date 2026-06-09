@@ -28,4 +28,20 @@ def init_db():
         columns = [row[1] for row in cursor.fetchall()]
         if columns and "resume_path" not in columns:
             conn.execute("ALTER TABLE students ADD COLUMN resume_path TEXT")
+
+        # Check if is_active column exists in the recruiters table
+        cursor = conn.execute("PRAGMA table_info(recruiters)")
+        columns = [row[1] for row in cursor.fetchall()]
+        if columns and "is_active" not in columns:
+            conn.execute("ALTER TABLE recruiters ADD COLUMN is_active INTEGER NOT NULL DEFAULT 1")
+
+        # Seed default admin if empty
+        cursor = conn.execute("SELECT count(*) FROM admins")
+        if cursor.fetchone()[0] == 0:
+            from werkzeug.security import generate_password_hash
+            hashed_pw = generate_password_hash("admin123")
+            conn.execute(
+                "INSERT INTO admins (username, email, password) VALUES ('admin', 'admin@placement.com', ?)",
+                (hashed_pw,)
+            )
         conn.commit()

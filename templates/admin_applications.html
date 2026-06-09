@@ -1,0 +1,126 @@
+{% extends "base.html" %}
+
+{% block title %}Monitor Applications - Admin{% endblock %}
+
+{% block content %}
+<div class="row mb-4 align-items-center">
+    <div class="col-md-8">
+        <h2 class="fw-bold mb-0">📁 System Applications Audit</h2>
+        <p class="text-muted mb-0">Monitor student placements and filter applications by status.</p>
+    </div>
+    <div class="col-md-4 text-md-end">
+        <a href="{{ url_for('admin.dashboard') }}" class="btn btn-outline-secondary px-4">
+            &larr; Admin Dashboard
+        </a>
+    </div>
+</div>
+
+<!-- Filters Bar -->
+<div class="mb-4">
+    <label class="text-secondary font-monospace text-uppercase fs-8 mb-2 d-block">Filter by Application Status</label>
+    <div class="d-flex flex-wrap gap-2">
+        <a href="{{ url_for('admin.applications') }}" 
+           class="btn btn-sm {% if not current_filter %}btn-dark{% else %}btn-outline-dark{% endif %} px-3 py-2">
+            All Applications
+        </a>
+        <a href="{{ url_for('admin.applications', status='pending') }}" 
+           class="btn btn-sm {% if current_filter == 'pending' %}btn-warning text-dark{% else %}btn-outline-warning{% endif %} px-3 py-2">
+            ⏳ Pending
+        </a>
+        <a href="{{ url_for('admin.applications', status='reviewed') }}" 
+           class="btn btn-sm {% if current_filter == 'reviewed' %}btn-info text-dark{% else %}btn-outline-info{% endif %} px-3 py-2">
+            👁️ Reviewed
+        </a>
+        <a href="{{ url_for('admin.applications', status='shortlisted') }}" 
+           class="btn btn-sm {% if current_filter == 'shortlisted' %}btn-primary{% else %}btn-outline-primary{% endif %} px-3 py-2">
+            ⭐ Shortlisted
+        </a>
+        <a href="{{ url_for('admin.applications', status='rejected') }}" 
+           class="btn btn-sm {% if current_filter == 'rejected' %}btn-danger{% else %}btn-outline-danger{% endif %} px-3 py-2">
+            ❌ Rejected
+        </a>
+        <a href="{{ url_for('admin.applications', status='selected') }}" 
+           class="btn btn-sm {% if current_filter == 'selected' %}btn-success{% else %}btn-outline-success{% endif %} px-3 py-2">
+            🎉 Selected
+        </a>
+    </div>
+</div>
+
+{% if not applications %}
+<div class="card shadow border-0 py-5 text-center my-4">
+    <div class="card-body">
+        <div class="display-1 text-muted mb-3">📭</div>
+        <h3 class="fw-bold text-dark">No Applications Found</h3>
+        <p class="text-muted mx-auto" style="max-width: 500px;">
+            There are no applications matching the status filter: <strong>{{ current_filter | capitalize if current_filter else 'All' }}</strong>.
+        </p>
+    </div>
+</div>
+{% else %}
+<div class="card shadow-sm border-0 rounded-3">
+    <div class="card-body p-0">
+        <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0">
+                <thead class="table-dark">
+                    <tr>
+                        <th scope="col" class="ps-4 py-3">App ID</th>
+                        <th scope="col" class="py-3">Student Candidate</th>
+                        <th scope="col" class="py-3">Job Listing</th>
+                        <th scope="col" class="py-3">Employer</th>
+                        <th scope="col" class="py-3">Location</th>
+                        <th scope="col" class="pe-4 py-3 text-end">Application Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for app in applications %}
+                    <tr>
+                        <td class="ps-4 text-secondary">#{{ app.application_id }}</td>
+                        <td>
+                            <div class="fw-semibold text-dark">{{ app.student_name }}</div>
+                            <small class="text-secondary">{{ app.student_email }}</small>
+                        </td>
+                        <td class="fw-semibold text-dark">{{ app.job_title }}</td>
+                        <td>{{ app.company_name }}</td>
+                        <td>📍 {{ app.location }}</td>
+                        <td class="pe-4 text-end">
+                            {% if app.status == 'pending' %}
+                                <span class="badge bg-warning text-dark border border-warning px-3 py-2">
+                                    Pending
+                                </span>
+                            {% elif app.status == 'reviewed' %}
+                                <span class="badge bg-info text-dark border border-info px-3 py-2">
+                                    Reviewed
+                                </span>
+                            {% elif app.status == 'shortlisted' %}
+                                <span class="badge bg-primary text-white border border-primary px-3 py-2">
+                                    Shortlisted
+                                </span>
+                            {% elif app.status == 'rejected' %}
+                                <span class="badge bg-danger text-white border border-danger px-3 py-2">
+                                    Rejected
+                                </span>
+                            {% elif app.status == 'selected' %}
+                                <span class="badge bg-success text-white border border-success px-3 py-2">
+                                    Selected
+                                </span>
+                            {% else %}
+                                <span class="badge bg-secondary text-white border px-3 py-2">
+                                    {{ app.status | capitalize }}
+                                </span>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endif %}
+
+<style>
+    .fs-8 {
+        font-size: 0.75rem;
+    }
+</style>
+{% endblock %}

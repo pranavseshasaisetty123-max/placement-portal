@@ -26,6 +26,8 @@ def login_required(user_type=None):
                     return redirect(url_for("auth.student_login"))
                 if user_type == "recruiter":
                     return redirect(url_for("auth.recruiter_login"))
+                if user_type == "admin":
+                    return redirect(url_for("admin.login"))
                 return redirect(url_for("main.home"))
 
             if user_type and session.get("user_type") != user_type:

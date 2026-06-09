@@ -1,0 +1,144 @@
+{% extends "base.html" %}
+
+{% block title %}Admin Dashboard - Placement Portal{% endblock %}
+
+{% block content %}
+<div class="row mb-4 align-items-center">
+    <div class="col">
+        <h2 class="fw-bold mb-0">🛠️ Administrative Console</h2>
+        <p class="text-muted mb-0">Platform overview, system-wide analytics, and moderation tools.</p>
+    </div>
+</div>
+
+<!-- Analytics Statistics Grid -->
+<div class="row g-4 mb-5">
+    
+    <!-- Students -->
+    <div class="col-sm-6 col-lg-3">
+        <div class="card border-0 shadow-sm rounded-3 bg-primary bg-gradient text-white h-100">
+            <div class="card-body p-4 d-flex align-items-center justify-content-between">
+                <div>
+                    <h6 class="text-uppercase text-white-50 fw-bold font-monospace fs-8 mb-1">Total Students</h6>
+                    <h2 class="fw-bold mb-0 display-6">{{ analytics.total_students }}</h2>
+                </div>
+                <span class="fs-1 opacity-50">👤</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Recruiters -->
+    <div class="col-sm-6 col-lg-3">
+        <div class="card border-0 shadow-sm rounded-3 bg-warning bg-gradient text-white h-100">
+            <div class="card-body p-4 d-flex align-items-center justify-content-between">
+                <div>
+                    <h6 class="text-uppercase text-white-50 fw-bold font-monospace fs-8 mb-1">Total Recruiters</h6>
+                    <h2 class="fw-bold mb-0 display-6">{{ analytics.total_recruiters }}</h2>
+                </div>
+                <span class="fs-1 opacity-50">🏢</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Jobs -->
+    <div class="col-sm-6 col-lg-3">
+        <div class="card border-0 shadow-sm rounded-3 bg-info bg-gradient text-white h-100">
+            <div class="card-body p-4 d-flex align-items-center justify-content-between">
+                <div>
+                    <h6 class="text-uppercase text-white-50 fw-bold font-monospace fs-8 mb-1">Active Jobs</h6>
+                    <h2 class="fw-bold mb-0 display-6">{{ analytics.total_jobs }}</h2>
+                </div>
+                <span class="fs-1 opacity-50">💼</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Applications -->
+    <div class="col-sm-6 col-lg-3">
+        <div class="card border-0 shadow-sm rounded-3 bg-success bg-gradient text-white h-100">
+            <div class="card-body p-4 d-flex align-items-center justify-content-between">
+                <div>
+                    <h6 class="text-uppercase text-white-50 fw-bold font-monospace fs-8 mb-1">Applications</h6>
+                    <h2 class="fw-bold mb-0 display-6">{{ analytics.total_applications }}</h2>
+                </div>
+                <span class="fs-1 opacity-50">📁</span>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<!-- Management Shortcuts Grid -->
+<h5 class="mb-3 font-monospace text-uppercase text-secondary">Quick Directory Actions</h5>
+<div class="row g-4">
+    
+    <!-- Student Management -->
+    <div class="col-md-6">
+        <div class="card border-0 shadow-sm h-100">
+            <div class="card-body p-4">
+                <h4 class="card-title text-primary h5 fw-bold mb-2">👤 Candidate Directory</h4>
+                <p class="text-muted fs-7">
+                    Audit registered students, view detailed profiles, and preview or download uploaded PDF resumes.
+                </p>
+                <a href="{{ url_for('admin.students') }}" class="btn btn-outline-primary mt-2">
+                    Manage Students &rarr;
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Recruiter Management -->
+    <div class="col-md-6">
+        <div class="card border-0 shadow-sm h-100">
+            <div class="card-body p-4">
+                <h4 class="card-title text-warning h5 fw-bold mb-2">🏢 Employer Directory</h4>
+                <p class="text-muted fs-7">
+                    Audit recruiter registration logs, and deactivate or reactivate recruiter accounts to restrict system access.
+                </p>
+                <a href="{{ url_for('admin.recruiters') }}" class="btn btn-outline-warning mt-2">
+                    Manage Employers &rarr;
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Job Moderation -->
+    <div class="col-md-6">
+        <div class="card border-0 shadow-sm h-100">
+            <div class="card-body p-4">
+                <h4 class="card-title text-info h5 fw-bold mb-2">💼 Moderation Board</h4>
+                <p class="text-muted fs-7">
+                    Inspect active job listings, verify descriptions, and delete appropriate or spam job openings.
+                </p>
+                <a href="{{ url_for('admin.jobs') }}" class="btn btn-outline-info mt-2">
+                    Moderate Listings &rarr;
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Application Auditing -->
+    <div class="col-md-6">
+        <div class="card border-0 shadow-sm h-100">
+            <div class="card-body p-4">
+                <h4 class="card-title text-success h5 fw-bold mb-2">📁 Applications Monitor</h4>
+                <p class="text-muted fs-7">
+                    Track all student applications, audit current applicant statuses, and filter by status.
+                </p>
+                <a href="{{ url_for('admin.applications') }}" class="btn btn-outline-success mt-2">
+                    Audit Applications &rarr;
+                </a>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<style>
+    .fs-7 {
+        font-size: 0.85rem;
+    }
+    .fs-8 {
+        font-size: 0.75rem;
+    }
+</style>
+{% endblock %}

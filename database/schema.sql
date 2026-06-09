@@ -10,6 +10,14 @@ CREATE TABLE IF NOT EXISTS recruiters (
     recruiter_id INTEGER PRIMARY KEY AUTOINCREMENT,
     company_name TEXT NOT NULL,
     email TEXT NOT NULL UNIQUE,
+    password TEXT NOT NULL,
+    is_active INTEGER NOT NULL DEFAULT 1
+);
+
+CREATE TABLE IF NOT EXISTS admins (
+    admin_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    username TEXT NOT NULL UNIQUE,
+    email TEXT NOT NULL UNIQUE,
     password TEXT NOT NULL
 );
 

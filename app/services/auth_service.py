@@ -79,12 +79,15 @@ def authenticate_student(email, password):
 def authenticate_recruiter(email, password):
     with get_db() as conn:
         user = conn.execute(
-            "SELECT recruiter_id, company_name, email, password FROM recruiters WHERE email = ?",
+            "SELECT recruiter_id, company_name, email, password, is_active FROM recruiters WHERE email = ?",
             (email,),
         ).fetchone()
 
     if user is None or not check_password_hash(user["password"], password):
         raise AuthError("Invalid email or password.")
+
+    if not user["is_active"]:
+        raise AuthError("Your account has been deactivated. Please contact the administrator.")
 
     return {
         "user_id": user["recruiter_id"],
