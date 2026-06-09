@@ -43,3 +43,12 @@ CREATE TABLE IF NOT EXISTS applications (
 
 CREATE UNIQUE INDEX IF NOT EXISTS idx_applications_student_job ON applications (student_id, job_id);
 
+CREATE TABLE IF NOT EXISTS notifications (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    user_id INTEGER NOT NULL,
+    user_type TEXT NOT NULL,
+    message TEXT NOT NULL,
+    is_read INTEGER NOT NULL DEFAULT 0,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+

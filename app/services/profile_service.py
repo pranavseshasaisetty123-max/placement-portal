@@ -95,6 +95,14 @@ def upload_resume(student_id, file):
             "UPDATE students SET resume_path = ? WHERE student_id = ?",
             (unique_name, student_id)
         )
+        # Hook: Send notification to student
+        from app.services import notification_service
+        notification_service.create_notification(
+            student_id,
+            "student",
+            "Your resume has been successfully uploaded/updated.",
+            conn=conn
+        )
         conn.commit()
 
     return unique_name

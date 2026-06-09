@@ -27,6 +27,14 @@ def create_job(title, description, location, skills, recruiter_id):
             """,
             (title, description, location, skills, recruiter_id),
         )
+        # Hook: Send notification to recruiter
+        from app.services import notification_service
+        notification_service.create_notification(
+            recruiter_id,
+            "recruiter",
+            f"Your job listing '{title}' has been successfully created.",
+            conn=conn
+        )
         conn.commit()
 
 

@@ -123,13 +123,19 @@ def register_recruiter():
 @auth_bp.route("/student-dashboard")
 @login_required(user_type="student")
 def student_dashboard():
-    return render_template("student_dashboard.html")
+    student_id = session.get("user_id")
+    from app.services import notification_service
+    recent_alerts = notification_service.get_notifications_for_user(student_id, "student", limit=3)
+    return render_template("student_dashboard.html", recent_alerts=recent_alerts)
 
 
 @auth_bp.route("/recruiter-dashboard")
 @login_required(user_type="recruiter")
 def recruiter_dashboard():
-    return render_template("recruiter_dashboard.html")
+    recruiter_id = session.get("user_id")
+    from app.services import notification_service
+    recent_alerts = notification_service.get_notifications_for_user(recruiter_id, "recruiter", limit=3)
+    return render_template("recruiter_dashboard.html", recent_alerts=recent_alerts)
 
 
 @auth_bp.route("/logout")

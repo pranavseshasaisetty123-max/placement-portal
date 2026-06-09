@@ -43,7 +43,10 @@ def dashboard():
     Route to render the administrator analytics dashboard.
     """
     analytics = admin_service.get_dashboard_analytics()
-    return render_template("admin_dashboard.html", analytics=analytics)
+    admin_id = session.get("user_id")
+    from app.services import notification_service
+    recent_alerts = notification_service.get_notifications_for_user(admin_id, "admin", limit=3)
+    return render_template("admin_dashboard.html", analytics=analytics, recent_alerts=recent_alerts)
 
 
 @admin_bp.route("/students")

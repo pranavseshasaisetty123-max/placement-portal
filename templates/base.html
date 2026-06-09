@@ -70,6 +70,15 @@
             {% endif %}
 
             {% if session.get('user_id') %}
+                <a class="btn btn-outline-light btn-sm position-relative me-2"
+                   href="{{ url_for('notifications.view_notifications') }}">
+                    🔔 Notifications
+                    {% if unread_notifications_count > 0 %}
+                        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                            {{ unread_notifications_count }}
+                        </span>
+                    {% endif %}
+                </a>
                 <a class="btn btn-outline-light btn-sm"
                    href="{{ url_for('auth.logout') }}">
                     Logout

@@ -1,5 +1,6 @@
 import sqlite3
 from database.connection import get_db
+from app.services import notification_service
 
 
 class ApplicationError(Exception):
@@ -35,6 +36,28 @@ def apply_to_job(student_id, job_id):
                 "INSERT INTO applications (student_id, job_id, status) VALUES (?, ?, 'pending')",
                 (student_id, job_id)
             )
+            
+            # Hook: Create notifications for student and recruiter
+            student = conn.execute("SELECT name FROM students WHERE student_id = ?", (student_id,)).fetchone()
+            job_details = conn.execute(
+                "SELECT title, recruiter_id FROM jobs WHERE job_id = ?", (job_id,)
+            ).fetchone()
+            if student and job_details:
+                # Student alert
+                notification_service.create_notification(
+                    student_id,
+                    "student",
+                    f"You have successfully applied for the job '{job_details['title']}'.",
+                    conn=conn
+                )
+                # Recruiter alert
+                notification_service.create_notification(
+                    job_details["recruiter_id"],
+                    "recruiter",
+                    f"New applicant {student['name']} has applied for your job listing: '{job_details['title']}'.",
+                    conn=conn
+                )
+                
             conn.commit()
         except sqlite3.IntegrityError:
             # Secondary check in case of race conditions (UNIQUE constraint violated)
@@ -145,6 +168,25 @@ def update_application_status(application_id, status, recruiter_id):
             "UPDATE applications SET status = ? WHERE application_id = ?",
             (normalized_status, application_id)
         )
+        
+        # Hook: Create status update notification for student
+        app_info = conn.execute(
+            """
+            SELECT a.student_id, j.title
+            FROM applications a
+            JOIN jobs j ON a.job_id = j.job_id
+            WHERE a.application_id = ?
+            """,
+            (application_id,)
+        ).fetchone()
+        if app_info:
+            notification_service.create_notification(
+                app_info["student_id"],
+                "student",
+                f"Your application status for the job '{app_info['title']}' has been updated to: {status.capitalize()}.",
+                conn=conn
+            )
+            
         conn.commit()
 
 

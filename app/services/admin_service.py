@@ -98,6 +98,15 @@ def toggle_recruiter_status(recruiter_id, is_active):
             "UPDATE recruiters SET is_active = ? WHERE recruiter_id = ?",
             (status_val, recruiter_id),
         )
+        # Hook: Send account update notification to recruiter
+        state_str = "activated" if is_active else "suspended"
+        from app.services import notification_service
+        notification_service.create_notification(
+            recruiter_id,
+            "recruiter",
+            f"Your employer account has been {state_str} by the administrator.",
+            conn=conn
+        )
         conn.commit()
 
 
@@ -126,12 +135,20 @@ def delete_job_by_admin(job_id):
     # Section 1: Clean up and delete
     with get_db() as conn:
         # Check job existence
-        job = conn.execute("SELECT 1 FROM jobs WHERE job_id = ?", (job_id,)).fetchone()
+        job = conn.execute("SELECT title, recruiter_id FROM jobs WHERE job_id = ?", (job_id,)).fetchone()
         if not job:
             raise AdminError("Job listing not found.")
 
         conn.execute("DELETE FROM applications WHERE job_id = ?", (job_id,))
         conn.execute("DELETE FROM jobs WHERE job_id = ?", (job_id,))
+        # Hook: Send moderation notification to recruiter
+        from app.services import notification_service
+        notification_service.create_notification(
+            job["recruiter_id"],
+            "recruiter",
+            f"Your job listing '{job['title']}' has been removed by the administrator for moderation purposes.",
+            conn=conn
+        )
         conn.commit()
 
 
