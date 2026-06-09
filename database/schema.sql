@@ -2,7 +2,8 @@ CREATE TABLE IF NOT EXISTS students (
     student_id INTEGER PRIMARY KEY AUTOINCREMENT,
     name TEXT NOT NULL,
     email TEXT NOT NULL UNIQUE,
-    password TEXT NOT NULL
+    password TEXT NOT NULL,
+    resume_path TEXT
 );
 
 CREATE TABLE IF NOT EXISTS recruiters (

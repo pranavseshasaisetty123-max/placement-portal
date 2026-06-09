@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+
+{% block title %}Upload Resume - Student{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-6 col-lg-5">
+        
+        <!-- Back Link -->
+        <div class="mb-4">
+            <a href="{{ url_for('profile.view_profile') }}" class="text-decoration-none text-secondary">
+                &larr; Back to profile
+            </a>
+        </div>
+
+        <div class="card border-0 shadow rounded-3">
+            <div class="card-body p-4 p-md-5">
+                
+                <h3 class="fw-bold text-dark mb-2">
+                    {% if student.resume_path %}
+                        🔄 Replace Resume
+                    {% else %}
+                        📁 Upload Resume
+                    {% endif %}
+                </h3>
+                <p class="text-muted mb-4 fs-7">
+                    Please select a PDF file. Uploading a new file will permanently overwrite any previously saved resume.
+                </p>
+
+                <form action="{{ url_for('profile.upload_resume') }}" method="POST" enctype="multipart/form-data">
+                    
+                    <div class="mb-4">
+                        <label for="resume" class="form-label fw-semibold text-secondary fs-7">Select PDF File</label>
+                        <input class="form-control" 
+                               type="file" 
+                               id="resume" 
+                               name="resume" 
+                               accept=".pdf" 
+                               required>
+                        <div class="form-text text-muted fs-8 mt-2">
+                            📌 <strong>Requirements:</strong> Only <code>.pdf</code> format is accepted. File size must not exceed 2MB.
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary w-100 py-3 fw-bold shadow-sm">
+                        {% if student.resume_path %}
+                            Update Resume
+                        {% else %}
+                            Upload Resume
+                        {% endif %}
+                    </button>
+                    
+                </form>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<style>
+    .fs-7 {
+        font-size: 0.85rem;
+    }
+    .fs-8 {
+        font-size: 0.78rem;
+    }
+</style>
+{% endblock %}

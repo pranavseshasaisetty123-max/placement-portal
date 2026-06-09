@@ -1,0 +1,104 @@
+{% extends "base.html" %}
+
+{% block title %}My Profile - Student{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-lg-8">
+        
+        <!-- Header -->
+        <div class="row mb-4 align-items-center">
+            <div class="col">
+                <h2 class="fw-bold mb-0">👤 My Profile</h2>
+                <p class="text-muted">Manage your personal details and resume uploads.</p>
+            </div>
+            <div class="col-auto">
+                <a href="{{ url_for('auth.student_dashboard') }}" class="btn btn-outline-secondary px-4">
+                    &larr; Dashboard
+                </a>
+            </div>
+        </div>
+
+        <div class="card border-0 shadow-sm rounded-3 mb-4">
+            <div class="card-body p-4 p-md-5">
+                
+                <!-- Student Details Section -->
+                <div class="mb-5 pb-4 border-bottom">
+                    <h4 class="fw-bold text-dark mb-4">Account Information</h4>
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <label class="text-muted d-block fs-7 mb-1">Full Name</label>
+                            <span class="fw-semibold text-dark fs-6">{{ student.name }}</span>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="text-muted d-block fs-7 mb-1">Email Address</label>
+                            <span class="fw-semibold text-dark fs-6">{{ student.email }}</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Document Management Section -->
+                <div>
+                    <h4 class="fw-bold text-dark mb-4">Resume & Documents</h4>
+                    
+                    <div class="p-4 rounded-3 border bg-light d-flex flex-column flex-md-row align-items-md-center justify-content-between gap-3">
+                        <div>
+                            <h5 class="fw-bold mb-1 text-dark">Curriculum Vitae (CV) / Resume</h5>
+                            <p class="text-muted mb-0 fs-7">
+                                Upload a PDF resume. It will be visible to recruiters for jobs you apply to.
+                            </p>
+                        </div>
+                        
+                        <div class="text-md-end">
+                            <label class="text-muted d-block fs-7 mb-1 text-md-end">Status</label>
+                            {% if student.resume_path %}
+                                <span class="badge bg-success-subtle text-success border border-success-subtle px-3 py-2 fs-7 mb-3 d-inline-block">
+                                    ✓ Resume Uploaded
+                                </span>
+                            {% else %}
+                                <span class="badge bg-danger-subtle text-danger border border-danger-subtle px-3 py-2 fs-7 mb-3 d-inline-block">
+                                    📭 No Resume Uploaded
+                                </span>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <div class="mt-4">
+                        {% if student.resume_path %}
+                            <div class="d-flex flex-wrap gap-2">
+                                <a href="{{ url_for('profile.view_resume', student_id=student.student_id) }}" 
+                                   target="_blank" 
+                                   class="btn btn-outline-primary px-4 py-2">
+                                    👁️ View Resume
+                                </a>
+                                <a href="{{ url_for('profile.download_resume', student_id=student.student_id) }}" 
+                                   class="btn btn-outline-secondary px-4 py-2">
+                                    📥 Download
+                                </a>
+                                <a href="{{ url_for('profile.upload_resume') }}" 
+                                   class="btn btn-primary px-4 py-2">
+                                    🔄 Replace Resume
+                                </a>
+                            </div>
+                        {% else %}
+                            <a href="{{ url_for('profile.upload_resume') }}" 
+                               class="btn btn-success px-5 py-3 fw-bold shadow-sm">
+                                ➕ Upload Your Resume Now
+                            </a>
+                        {% endif %}
+                    </div>
+                    
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<style>
+    .fs-7 {
+        font-size: 0.85rem;
+    }
+</style>
+{% endblock %}

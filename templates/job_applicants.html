@@ -35,6 +35,7 @@
                         <th scope="col" class="ps-4 py-3">Student Name</th>
                         <th scope="col" class="py-3">Email Address</th>
                         <th scope="col" class="py-3">Current Status</th>
+                        <th scope="col" class="py-3">Resume</th>
                         <th scope="col" class="pe-4 py-3 text-end" style="min-width: 250px;">Update Status</th>
                     </tr>
                 </thead>
@@ -72,6 +73,23 @@
                                 <span class="badge bg-secondary-subtle text-secondary border border-secondary-subtle px-3 py-2">
                                     {{ app.status | capitalize }}
                                 </span>
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if app.resume_path %}
+                                <div class="d-flex gap-1">
+                                    <a href="{{ url_for('profile.view_resume', student_id=app.student_id) }}" 
+                                       target="_blank" 
+                                       class="btn btn-sm btn-outline-primary py-1 px-2">
+                                        👁️ View
+                                    </a>
+                                    <a href="{{ url_for('profile.download_resume', student_id=app.student_id) }}" 
+                                       class="btn btn-sm btn-outline-secondary py-1 px-2">
+                                        📥 Download
+                                    </a>
+                                </div>
+                            {% else %}
+                                <span class="text-muted fs-7">No Resume</span>
                             {% endif %}
                         </td>
                         <td class="pe-4 text-end">

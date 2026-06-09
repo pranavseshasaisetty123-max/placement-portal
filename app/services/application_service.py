@@ -95,7 +95,7 @@ def get_applicants_for_job(job_id, recruiter_id):
         # Section 2: Fetch applicant details
         rows = conn.execute(
             """
-            SELECT a.application_id, a.status, s.student_id, s.name as student_name, s.email as student_email
+            SELECT a.application_id, a.status, s.student_id, s.name as student_name, s.email as student_email, s.resume_path
             FROM applications a
             JOIN students s ON a.student_id = s.student_id
             WHERE a.job_id = ?

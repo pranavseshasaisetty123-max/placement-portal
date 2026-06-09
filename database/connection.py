@@ -22,4 +22,10 @@ def init_db():
         columns = [row[1] for row in cursor.fetchall()]
         if columns and "skills" not in columns:
             conn.execute("ALTER TABLE jobs ADD COLUMN skills TEXT NOT NULL DEFAULT ''")
+
+        # Check if resume_path column exists in the students table
+        cursor = conn.execute("PRAGMA table_info(students)")
+        columns = [row[1] for row in cursor.fetchall()]
+        if columns and "resume_path" not in columns:
+            conn.execute("ALTER TABLE students ADD COLUMN resume_path TEXT")
         conn.commit()
