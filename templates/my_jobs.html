@@ -35,7 +35,7 @@
         <div class="card border-0 shadow-sm rounded-3 hover-shadow-transition">
             <div class="card-body p-4">
                 <div class="row align-items-center">
-                    <div class="col-lg-8 mb-3 mb-lg-0">
+                    <div class="col-lg-7 mb-3 mb-lg-0">
                         <div class="d-flex align-items-center gap-2 mb-2">
                             <h4 class="card-title fw-bold text-dark mb-0 h5">{{ job.title }}</h4>
                             <span class="badge bg-secondary-subtle text-secondary border border-secondary-subtle px-2 py-1 fs-7">
@@ -61,8 +61,16 @@
                     </div>
 
                     <!-- Actions -->
-                    <div class="col-lg-4 text-lg-end">
+                    <div class="col-lg-5 text-lg-end">
                         <div class="d-flex justify-content-start justify-content-lg-end gap-2">
+                            <a href="{{ url_for('applications.job_applicants', job_id=job.job_id) }}" 
+                               class="btn btn-primary px-3 py-2">
+                                👥 Applicants 
+                                <span class="badge bg-white text-primary ms-1">
+                                    {{ job.applicant_count }}
+                                </span>
+                            </a>
+                            
                             <a href="{{ url_for('jobs.edit', job_id=job.job_id) }}" 
                                class="btn btn-outline-primary px-3 py-2">
                                 ✏️ Edit

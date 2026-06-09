@@ -28,5 +28,9 @@ CREATE TABLE IF NOT EXISTS applications (
     job_id INTEGER NOT NULL,
     status TEXT NOT NULL DEFAULT 'pending',
     FOREIGN KEY (student_id) REFERENCES students (student_id),
-    FOREIGN KEY (job_id) REFERENCES jobs (job_id)
+    FOREIGN KEY (job_id) REFERENCES jobs (job_id),
+    UNIQUE(student_id, job_id)
 );
+
+CREATE UNIQUE INDEX IF NOT EXISTS idx_applications_student_job ON applications (student_id, job_id);
+

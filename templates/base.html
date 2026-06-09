@@ -25,6 +25,10 @@
                    href="{{ url_for('jobs.browse') }}">
                     Browse Jobs
                 </a>
+                <a class="btn btn-outline-light btn-sm"
+                   href="{{ url_for('applications.my_applications') }}">
+                    My Applications
+                </a>
             {% elif session.get('user_type') == 'recruiter' %}
                 <a class="btn btn-outline-light btn-sm"
                    href="{{ url_for('auth.recruiter_dashboard') }}">
