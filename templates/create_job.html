@@ -1,0 +1,95 @@
+{% extends "base.html" %}
+
+{% block title %}
+    {% if job %}Edit Job - {{ job.title }}{% else %}Post a Job{% endif %}
+{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-lg-8">
+        <div class="card border-0 shadow-lg rounded-3 mb-5">
+            <div class="card-header bg-dark text-white p-4 rounded-top">
+                <h3 class="mb-0 fw-bold">
+                    {% if job %}
+                        💼 Edit Job Listing
+                    {% else %}
+                        ➕ Post a New Job Listing
+                    {% endif %}
+                </h3>
+                <p class="text-white-50 mb-0 mt-1">
+                    Fill in the details below to publish job requirements.
+                </p>
+            </div>
+            
+            <div class="card-body p-4 p-md-5">
+                <form method="POST" action="{% if job %}{{ url_for('jobs.edit', job_id=job.job_id) }}{% else %}{{ url_for('jobs.create') }}{% endif %}">
+                    
+                    <!-- Job Title -->
+                    <div class="mb-4">
+                        <label for="title" class="form-label fw-semibold">Job Title</label>
+                        <input type="text" 
+                               class="form-control form-control-lg border-2" 
+                               id="title" 
+                               name="title" 
+                               placeholder="e.g. Senior Software Engineer" 
+                               value="{% if title is defined %}{{ title }}{% elif job %}{{ job.title }}{% endif %}" 
+                               required>
+                        <div class="form-text text-muted">A clear job title helps match the right students.</div>
+                    </div>
+
+                    <!-- Job Location -->
+                    <div class="mb-4">
+                        <label for="location" class="form-label fw-semibold">Location</label>
+                        <input type="text" 
+                               class="form-control border-2" 
+                               id="location" 
+                               name="location" 
+                               placeholder="e.g. Bengaluru, India or Remote" 
+                               value="{% if location is defined %}{{ location }}{% elif job %}{{ job.location }}{% endif %}" 
+                               required>
+                        <div class="form-text text-muted">Specify the city, region, or specify 'Remote'.</div>
+                    </div>
+
+                    <!-- Required Skills -->
+                    <div class="mb-4">
+                        <label for="skills" class="form-label fw-semibold">Required Skills</label>
+                        <input type="text" 
+                               class="form-control border-2" 
+                               id="skills" 
+                               name="skills" 
+                               placeholder="e.g. Python, Flask, SQL, HTML" 
+                               value="{% if skills is defined %}{{ skills }}{% elif job %}{{ job.skills }}{% endif %}" 
+                               required>
+                        <div class="form-text text-muted">Enter core skills required for the job, separated by commas.</div>
+                    </div>
+
+                    <!-- Job Description -->
+                    <div class="mb-4">
+                        <label for="description" class="form-label fw-semibold">Job Description</label>
+                        <textarea class="form-control border-2" 
+                                  id="description" 
+                                  name="description" 
+                                  rows="6" 
+                                  placeholder="Describe the role, responsibilities, salary, and requirements..." 
+                                  required>{% if description is defined %}{{ description }}{% elif job %}{{ job.description }}{% endif %}</textarea>
+                        <div class="form-text text-muted">Provide a comprehensive outline of the day-to-day duties and expectations.</div>
+                    </div>
+
+                    <!-- Actions -->
+                    <div class="d-flex justify-content-between align-items-center mt-5 pt-3 border-top">
+                        <a href="{% if job %}{{ url_for('jobs.my_jobs') }}{% else %}{{ url_for('auth.recruiter_dashboard') }}{% endif %}" 
+                           class="btn btn-outline-secondary px-4 py-2">
+                            Cancel
+                        </a>
+                        
+                        <button type="submit" class="btn btn-success px-5 py-2 fw-semibold shadow-sm">
+                            {% if job %}Save Changes{% else %}Publish Job{% endif %}
+                        </button>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

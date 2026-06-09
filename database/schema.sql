@@ -16,6 +16,7 @@ CREATE TABLE IF NOT EXISTS jobs (
     job_id INTEGER PRIMARY KEY AUTOINCREMENT,
     title TEXT NOT NULL,
     description TEXT NOT NULL,
+    skills TEXT NOT NULL DEFAULT '',
     location TEXT NOT NULL,
     recruiter_id INTEGER NOT NULL,
     FOREIGN KEY (recruiter_id) REFERENCES recruiters (recruiter_id)

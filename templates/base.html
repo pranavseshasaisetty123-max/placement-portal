@@ -21,10 +21,22 @@
                    href="{{ url_for('auth.student_dashboard') }}">
                     Dashboard
                 </a>
+                <a class="btn btn-outline-light btn-sm"
+                   href="{{ url_for('jobs.browse') }}">
+                    Browse Jobs
+                </a>
             {% elif session.get('user_type') == 'recruiter' %}
                 <a class="btn btn-outline-light btn-sm"
                    href="{{ url_for('auth.recruiter_dashboard') }}">
                     Dashboard
+                </a>
+                <a class="btn btn-outline-light btn-sm"
+                   href="{{ url_for('jobs.my_jobs') }}">
+                    My Jobs
+                </a>
+                <a class="btn btn-outline-light btn-sm"
+                   href="{{ url_for('jobs.create') }}">
+                    Post a Job
                 </a>
             {% endif %}
 

@@ -17,4 +17,9 @@ def init_db():
 
     with get_db() as conn:
         conn.executescript(schema)
+        # Check if skills column exists in the jobs table
+        cursor = conn.execute("PRAGMA table_info(jobs)")
+        columns = [row[1] for row in cursor.fetchall()]
+        if columns and "skills" not in columns:
+            conn.execute("ALTER TABLE jobs ADD COLUMN skills TEXT NOT NULL DEFAULT ''")
         conn.commit()

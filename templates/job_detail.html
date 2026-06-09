@@ -1,0 +1,128 @@
+{% extends "base.html" %}
+
+{% block title %}{{ job.title }} at {{ job.company_name }} - Details{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-lg-10">
+        
+        <!-- Back Button -->
+        <div class="mb-4">
+            <a href="{{ url_for('jobs.browse') }}" class="text-decoration-none text-secondary">
+                &larr; Back to job search
+            </a>
+        </div>
+
+        <div class="row g-4">
+            
+            <!-- Job Content (Left) -->
+            <div class="col-md-8">
+                <div class="card border-0 shadow-sm rounded-3 mb-4">
+                    <div class="card-body p-4 p-md-5">
+                        
+                        <!-- Header details -->
+                        <div class="mb-4 pb-4 border-bottom">
+                            <span class="badge bg-success-subtle text-success border border-success-subtle px-3 py-2 fs-7 mb-2">
+                                🏢 {{ job.company_name }}
+                            </span>
+                            <h1 class="fw-bold text-dark display-6 mt-1 mb-3">{{ job.title }}</h1>
+                            
+                            <div class="d-flex flex-wrap gap-3 text-secondary fs-6">
+                                <div>📍 <strong>Location:</strong> {{ job.location }}</div>
+                                <div>✉️ <strong>Contact:</strong> {{ job.recruiter_email }}</div>
+                            </div>
+                        </div>
+
+                        <!-- Description -->
+                        <div class="mb-4">
+                            <h4 class="fw-bold text-dark mb-3">Job Description</h4>
+                            <div class="text-muted fs-6" style="white-space: pre-line; line-height: 1.6;">
+                                {{ job.description }}
+                            </div>
+                        </div>
+
+                        <!-- Skills -->
+                        <div>
+                            <h4 class="fw-bold text-dark mb-3">Required Skills</h4>
+                            <div>
+                                {% if job.skills %}
+                                    {% for skill in job.skills.split(',') %}
+                                        <span class="badge bg-primary-subtle text-primary border border-primary-subtle px-3 py-2 me-2 mb-2 fs-6">
+                                            {{ skill.strip() }}
+                                        </span>
+                                    {% endfor %}
+                                {% else %}
+                                    <span class="text-muted fs-7">No specific skills listed.</span>
+                                {% endif %}
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <!-- Job Facts / Apply Widget (Right) -->
+            <div class="col-md-4">
+                <div class="card border-0 shadow-sm rounded-3 position-sticky" style="top: 20px;">
+                    <div class="card-body p-4">
+                        <h5 class="fw-bold text-dark mb-4">Application Summary</h5>
+                        
+                        <div class="mb-4">
+                            <label class="text-muted d-block fs-7 mb-1">Company</label>
+                            <span class="fw-semibold text-dark fs-6">{{ job.company_name }}</span>
+                        </div>
+
+                        <div class="mb-4">
+                            <label class="text-muted d-block fs-7 mb-1">Location</label>
+                            <span class="fw-semibold text-dark fs-6">📍 {{ job.location }}</span>
+                        </div>
+
+                        <div class="mb-4">
+                            <label class="text-muted d-block fs-7 mb-1">Status</label>
+                            {% if has_applied %}
+                                <span class="badge bg-success-subtle text-success px-3 py-2 border border-success-subtle fs-7 d-inline-block">
+                                    Applied
+                                </span>
+                            {% else %}
+                                <span class="badge bg-warning-subtle text-warning px-3 py-2 border border-warning-subtle fs-7 d-inline-block">
+                                    Open
+                                </span>
+                            {% endif %}
+                        </div>
+
+                        <hr class="my-4">
+
+                        <!-- Apply Button Form -->
+                        {% if has_applied %}
+                            <button class="btn btn-success w-100 py-3 fw-bold disabled border-0 shadow-sm" disabled>
+                                ✓ Applied
+                            </button>
+                            <p class="text-center text-success fs-7 mt-2 mb-0">
+                                Your application has been submitted.
+                            </p>
+                        {% else %}
+                            <form action="{{ url_for('jobs.apply', job_id=job.job_id) }}" method="POST">
+                                <button type="submit" class="btn btn-primary w-100 py-3 fw-bold shadow-sm">
+                                    Apply Now &rarr;
+                                </button>
+                            </form>
+                            <p class="text-center text-muted fs-7 mt-2 mb-0">
+                                Apply directly to the recruiter.
+                            </p>
+                        {% endif %}
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+<style>
+    .fs-7 {
+        font-size: 0.85rem;
+    }
+</style>
+{% endblock %}

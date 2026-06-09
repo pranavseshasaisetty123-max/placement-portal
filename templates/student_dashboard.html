@@ -18,9 +18,24 @@
             You are logged in as {{ session.get('email') }}.
         </p>
 
-        <p>
-            Job browsing and application features will be added in the next sprint.
-        </p>
+        <div class="mt-4">
+            <h5 class="mb-3 font-monospace text-uppercase text-secondary">Quick Actions</h5>
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <div class="card h-100 border-0 shadow-sm bg-light">
+                        <div class="card-body d-flex flex-column">
+                            <h4 class="card-title text-primary h5 fw-bold">🔍 Browse Available Jobs</h4>
+                            <p class="card-text text-muted flex-grow-1">
+                                Search for placements, internships, and full-time opportunities. Filter jobs by keyword, company, skills, or location.
+                            </p>
+                            <a href="{{ url_for('jobs.browse') }}" class="btn btn-primary mt-3 align-self-start">
+                                Explore Jobs &rarr;
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
     </div>
 

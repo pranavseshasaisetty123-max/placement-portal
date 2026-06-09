@@ -2,7 +2,7 @@ import os
 
 from flask import Flask
 
-from app.routes import auth_bp, main_bp
+from app.routes import auth_bp, jobs_bp, main_bp
 from config import BASE_DIR, Config
 from database.connection import init_db
 
@@ -17,6 +17,7 @@ def create_app():
 
     app.register_blueprint(main_bp)
     app.register_blueprint(auth_bp)
+    app.register_blueprint(jobs_bp)
 
     with app.app_context():
         init_db()
